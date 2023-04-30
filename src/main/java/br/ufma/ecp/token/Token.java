@@ -9,6 +9,8 @@ public class Token {
         this.lexeme = lexeme;
     }
 
+    
+
     public String toString() {
         var type = this.type.toString();
         if (type.equals("NUMBER"))

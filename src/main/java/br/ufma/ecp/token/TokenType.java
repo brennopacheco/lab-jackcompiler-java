@@ -21,7 +21,6 @@ public enum TokenType {
     // Literals.
     NUMBER,
     STRING,
-
     IDENT,
 
     // keywords
