@@ -182,4 +182,29 @@ public class Parser {
         expectPeek(TokenType.SEMICOLON);
         printNonTerminal("/letStatement");
     }
+
+    // Elementos sintáticos
+
+    // identifier
+
+    public void parseCLass() {
+        printNonTerminal("class");
+        
+        expectPeek(TokenType.CLASS);
+        expectPeek(TokenType.LBRACE);
+
+        while (peekTokenIs(TokenType.STATIC) || peekTokenIs(TokenType.FIELD)) {
+            parseClassVarDec();
+        }
+
+        while (peekTokenIs(TokenType.FUNCTION) || peekTokenIs(TokenType.CONSTRUCTOR) || peekTokenIs(TokenType.METHOD)) {
+            parseSubroutineDec();
+        }
+        
+        expectPeek(TokenType.RBRACE);
+
+        printNonTerminal("/class");
+    }
+
+    
 }
