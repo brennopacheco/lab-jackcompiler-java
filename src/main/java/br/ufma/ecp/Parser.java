@@ -230,4 +230,61 @@ public class Parser {
 
         printNonTerminal("/classVarDec");
     }
+    
+    public void parseSubroutineDec() {
+        printNonTerminal("subroutineDec");
+
+        expectPeek(TokenType.CONSTRUCTOR, TokenType.FUNCTION, TokenType.METHOD);
+        var subroutineType = currentToken.type;
+
+        expectPeek(TokenType.VOID, TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
+        expectPeek(TokenType.IDENT); 
+
+        var functionName = className + "." + currentToken.value();
+
+        expectPeek(TokenType.LPAREN);
+        parseParameterList();
+        expectPeek(TokenType.RPAREN);
+        parseSubroutineBody();
+        printNonTerminal("/subroutineDec");
+    }
+
+    public void parseParameterList() {
+        printNonTerminal("parameterList");
+
+        if (peekTokenIs(TokenType.RPAREN)){
+            expectPeek(TokenType.VOID, TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
+            String type = currentToken.value();
+
+            expectPeek(TokenType.IDENT);
+            String name = currentToken.value();
+
+            while (peekTokenIs(TokenType.COMMA)) {
+                expectPeek(TokenType.COMMA);
+                expectPeek(TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
+                type = currentToken.value();
+
+                expectPeek(TokenType.IDENT);
+                name = currentToken.value();
+            }
+
+        }
+
+        printNonTerminal("/parameterList");
+    }
+
+    public void parseSubroutineBody(String functionName, TokenType subroutineType) {
+        printNonTerminal("subroutineBody");
+
+        expectPeek(TokenType.LBRACE);
+
+        while (peekTokenIs(TokenType.VAR)) {
+            parseVarDec();
+        }
+
+        parseStatements();
+        expectPeek(TokenType.RBRACE);
+
+        printNonTerminal("/subroutineBody");
+    }
 }
