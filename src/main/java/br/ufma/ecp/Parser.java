@@ -189,7 +189,7 @@ public class Parser {
     // classdef
     public void parseCLass() {
         printNonTerminal("class");
-        
+
         expectPeek(TokenType.CLASS);
         expectPeek(TokenType.IDENT);
         className = currentToken.value();
@@ -202,7 +202,7 @@ public class Parser {
         while (peekTokenIs(TokenType.FUNCTION) || peekTokenIs(TokenType.CONSTRUCTOR) || peekTokenIs(TokenType.METHOD)) {
             parseSubroutineDec();
         }
-        
+
         expectPeek(TokenType.RBRACE);
 
         printNonTerminal("/class");
@@ -230,7 +230,7 @@ public class Parser {
 
         printNonTerminal("/classVarDec");
     }
-    
+
     public void parseSubroutineDec() {
         printNonTerminal("subroutineDec");
 
@@ -238,7 +238,7 @@ public class Parser {
         var subroutineType = currentToken.type;
 
         expectPeek(TokenType.VOID, TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
-        expectPeek(TokenType.IDENT); 
+        expectPeek(TokenType.IDENT);
 
         var functionName = className + "." + currentToken.value();
 
@@ -252,7 +252,7 @@ public class Parser {
     public void parseParameterList() {
         printNonTerminal("parameterList");
 
-        if (peekTokenIs(TokenType.RPAREN)){
+        if (peekTokenIs(TokenType.RPAREN)) {
             expectPeek(TokenType.VOID, TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
             String type = currentToken.value();
 
@@ -286,5 +286,24 @@ public class Parser {
         expectPeek(TokenType.RBRACE);
 
         printNonTerminal("/subroutineBody");
+    }
+
+    public void parseVarDec() {
+        printNonTerminal("varDec");
+        expectPeek(TokenType.VAR);
+        expectPeek(TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
+        String type = currentToken.value();
+        expectPeek(TokenType.IDENT);
+        String name = currentToken.value();
+
+        while (peekTokenIs(TokenType.COMMA)) {
+            expectPeek(TokenType.COMMA);
+            expectPeek(TokenType.IDENT);
+
+            name = currentToken.value();
+        }
+
+        expectPeek(TokenType.SEMICOLON);
+        printNonTerminal("/varDec");
     }
 }
