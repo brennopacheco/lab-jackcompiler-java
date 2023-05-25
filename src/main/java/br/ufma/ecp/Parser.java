@@ -12,6 +12,7 @@ public class Parser {
     private Token currentToken;
     private Token peekToken;
     private StringBuilder xmlOutput = new StringBuilder();
+    private String className;
 
     public Parser(byte[] input) {
         scan = new Scanner(input);
@@ -185,12 +186,13 @@ public class Parser {
 
     // Elementos sintáticos
 
-    // identifier
-
+    // classdef
     public void parseCLass() {
         printNonTerminal("class");
         
         expectPeek(TokenType.CLASS);
+        expectPeek(TokenType.IDENT);
+        className = currentToken.value();
         expectPeek(TokenType.LBRACE);
 
         while (peekTokenIs(TokenType.STATIC) || peekTokenIs(TokenType.FIELD)) {
@@ -206,5 +208,26 @@ public class Parser {
         printNonTerminal("/class");
     }
 
-    
+    public void parseClassVarDec() {
+        printNonTerminal("classVarDec");
+
+        expectPeek(TokenType.STATIC, TokenType.FIELD);
+
+        expectPeek(TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
+        String type = currentToken.value();
+
+        expectPeek(TokenType.IDENT);
+        String name = currentToken.value();
+
+        while (peekTokenIs(TokenType.COMMA)) {
+            expectPeek(TokenType.COMMA);
+            expectPeek(TokenType.IDENT);
+            name = currentToken.value();
+        }
+
+        expectPeek(TokenType.SEMICOLON);
+        ;
+
+        printNonTerminal("/classVarDec");
+    }
 }
