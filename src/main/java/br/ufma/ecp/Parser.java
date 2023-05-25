@@ -209,7 +209,7 @@ public class Parser {
         expectPeek(TokenType.LPAREN);
         parseParameterList();
         expectPeek(TokenType.RPAREN);
-        parseSubroutineBody();
+        parseSubroutineBody(functionName, subroutineType);
         printNonTerminal("/subroutineDec");
     }
 
