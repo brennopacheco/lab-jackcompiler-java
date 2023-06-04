@@ -242,19 +242,15 @@ public class Parser {
         printNonTerminal("parameterList");
 
         if (!peekTokenIs(TokenType.RPAREN)) {
-            expectPeek(TokenType.VOID, TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
-            //String type = currentToken.value();
+            expectPeek(TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
 
             expectPeek(TokenType.IDENT);
-            //String name = currentToken.value();
 
             while (peekTokenIs(TokenType.COMMA)) {
                 expectPeek(TokenType.COMMA);
                 expectPeek(TokenType.INT, TokenType.CHAR, TokenType.BOOLEAN, TokenType.IDENT);
-                //type = currentToken.value();
 
                 expectPeek(TokenType.IDENT);
-                //name = currentToken.value();
             }
 
         }

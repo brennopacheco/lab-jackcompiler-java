@@ -393,8 +393,6 @@ public class ParserTest extends TestSupport {
 
 
   /*
-  
-
    @Test
    public void testParserWithLessSquareGame() throws IOException {
        var input = fromFile("ExpressionLessSquare/SquareGame.jack");
