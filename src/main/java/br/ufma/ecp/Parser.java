@@ -30,7 +30,7 @@ public class Parser {
     }
 
     public void parse() {
-
+        parseCLass();
     }
 
     // Aux Functions
