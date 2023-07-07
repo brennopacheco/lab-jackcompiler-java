@@ -452,7 +452,10 @@ public class Parser {
 
                 Symbol sym = symTable.resolve(currentToken.lexeme);
 
-                if (peekTokenIs(TokenType.LBRACKET)) { // array
+                if (peekTokenIs(TokenType.LPAREN) || peekTokenIs(TokenType.DOT)) {
+                    parseSubroutineCall();
+                }
+                else if (peekTokenIs(TokenType.LBRACKET)) { // array
                     expectPeek(TokenType.LBRACKET);
                     parseExpression();
                     vmWriter.writePush(kind2Segment(sym.kind()), sym.index());
