@@ -516,8 +516,6 @@ public class Parser {
         vmWriter.writePop(Segment.TEMP, 0);
 
         printNonTerminal("/doStatement");
-
-        printNonTerminal("/doStatement");
     }
 
     // '{' varDec* statements '}'
